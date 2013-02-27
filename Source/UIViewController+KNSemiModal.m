@@ -160,6 +160,7 @@ const struct KNSemiModalOptionKeys KNSemiModalOptionKeys = {
     [self kn_registerDefaultsAndOptions:options];
 	UIViewController *targetParentVC = [self kn_parentTargetViewController];
 	// implement view controller containment for the semi-modal view controller
+    UIView *ignore __unused = vc.view; // force viewDidLoad to execute before viewWillAppear
 	[targetParentVC addChildViewController:vc];
 	if ([vc respondsToSelector:@selector(beginAppearanceTransition:animated:)]) {
 		[vc beginAppearanceTransition:YES animated:YES]; // iOS 6
@@ -284,7 +285,6 @@ const struct KNSemiModalOptionKeys KNSemiModalOptionKeys = {
 	KNTransitionCompletionBlock dismissBlock = objc_getAssociatedObject(self, kSemiModalDismissBlock);
 	
 	// child controller containment
-    UIView *ignore __unused = vc.view; // force viewDidLoad to execute before viewWillAppear
 	[vc willMoveToParentViewController:nil];
 	if ([vc respondsToSelector:@selector(beginAppearanceTransition:animated:)]) {
 		[vc beginAppearanceTransition:NO animated:YES]; // iOS 6
